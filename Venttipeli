@@ -1,0 +1,78 @@
+public class Ventti {
+    public static void main(String[] args) {
+        int pKäsi, jKäsi = 0;
+        Scanner lukija = new Scanner(System.in);
+        ArrayList <Integer> pelaaja = new ArrayList <> ();
+        ArrayList <Integer> jakaja = new ArrayList <> ();
+        ArrayList <Integer> kortit = new ArrayList <> ();
+        for (int i=0; i<4; i++) {
+            for (int n=2; n<=14; n++) {
+                kortit.add(n);
+            }
+        }
+        Collections.shuffle(kortit);
+        
+        System.out.print("Anna kutsunimesi: ");
+        String kutsuNimi = lukija.nextLine();
+        System.out.println("Ok "+ kutsuNimi+"! Peli alkaa: ");
+        System.out.println("");
+        
+        pelaaja.add(kortit.get(0));
+        System.out.println("Ekan kortin arvo on: " + pelaaja.get(0));
+        pelaaja.add(kortit.get(1));
+        System.out.println("Tokan kortin arvo on: "+ pelaaja.get(1));
+        pKäsi = pelaaja.get(0)+pelaaja.get(1);
+        
+        int i=2;
+        while (i<kortit.size()){
+            if (pKäsi > 21) {
+                System.out.println("Korttien arvojen summa: "+pKäsi+" on suurempi kuin 21.");
+                System.out.println("Jakaja voittaa!");
+                break;
+            }
+            System.out.println("Haluatko vielä kortin? y/n ");
+            String answer = lukija.nextLine();
+            if(answer.equals("y")) {
+                pelaaja.add(kortit.get(i));
+                System.out.println("Kortin arvo: "+pelaaja.get(i));
+                pKäsi += pelaaja.get(i);
+                System.out.println("Korttien arvojen summa: "+pKäsi);
+                i++;
+            }
+ 
+            else {
+               int n = 0;
+                while (i<kortit.size()) {
+                    jakaja.add(kortit.get(i));
+                    System.out.println("Kortin arvo: " + jakaja.get(n));
+                    jKäsi += jakaja.get(n);
+                    if (jKäsi == pKäsi) {
+                        System.out.println("Jakajan kädessä on: "+jKäsi);
+                        System.out.println("Jakaja voittaa!");
+                        break;
+                    }
+                    if(jKäsi > 21) {
+                        System.out.println("Jakajan kädessä on:"+jKäsi);
+                        System.out.println("Pelaaja voittaa!");
+                        break;
+                    }
+                    if (jKäsi < 21 && jKäsi > pKäsi) {
+                        System.out.println("Jakajan kädessä "+jKäsi);
+                        System.out.println("Jakaja Voittaa!");
+                        break;
+                    }
+                    i++;
+                    n++;
+                }
+                break;
+            }
+            
+            if(pKäsi>21) {
+                System.out.println("Sinun korttien arvojen summa "+pKäsi+
+                        " on suurempi kuin 21");
+                System.out.println("Jakaja Voittaa ");
+                break;
+            }
+        }
+    }
+}
